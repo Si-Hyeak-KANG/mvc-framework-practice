@@ -1,4 +1,4 @@
-package org.example;
+package org.example.practice;
 
 import org.passay.CharacterData;
 import org.passay.CharacterRule;
@@ -8,7 +8,7 @@ import org.passay.PasswordGenerator;
 /**
  * 0 ~ 12 자리 랜덤 패스워드 생성
  */
-public class RandomPasswordGenerator implements org.example.PasswordGenerator {
+public class RandomPasswordGenerator implements org.example.practice.PasswordGenerator {
 
     /**
      * Special characters allowed in password

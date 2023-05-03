@@ -1,4 +1,4 @@
-package org.example;
+package org.example.practice;
 
 // 메서드를 하나 가진 Functional Interface
 // 사실 구현체를 직접 만들 필요가 없음
