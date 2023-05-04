@@ -1,4 +1,4 @@
-package org.example.calculate;
+package org.example.calculate.operator;
 
 import java.util.Arrays;
 

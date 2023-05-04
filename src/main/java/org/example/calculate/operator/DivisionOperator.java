@@ -1,4 +1,6 @@
-package org.example.calculate;
+package org.example.calculate.operator;
+
+import org.example.calculate.PositiveNumber;
 
 public class DivisionOperator implements NewArithmeticOperator {
     @Override
