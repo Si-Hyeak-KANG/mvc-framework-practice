@@ -1,15 +1,17 @@
 package org.example.was;
 
-import org.example.calculate.Calculator;
-import org.example.calculate.PositiveNumber;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.*;
+import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.nio.charset.StandardCharsets;
 
+/**
+ * STEP 1 : 사용자 요청을 메인 Thread 가 처리
+ * STEP 2 : 사용자 요청이 들어올 때마다 Thread 를 생성해서 사용자 요청을 처리 -> 동시 접속자가 많아질 수록. cpu 와 메모리 사용량 증가, 서버 다운
+ * STEP 3 : 안정적인 서비스를 위해 'Thread Pool' 적용
+ */
 // Custom Tomcat Practice - WAS (Web Application Server)
 // HTTP 프로토콜 통신 방식
 public class CustomWebApplicationServer {
@@ -32,31 +34,8 @@ public class CustomWebApplicationServer {
             while ((clientSocket = serverSocket.accept()) != null) {
                 logger.info("[CustomWebApplicationServer] client connected!");
 
-                /**
-                 * Step1 - 사용자 요청을 메인 Thread 가 처리하도록 한다.
-                 */
-                try (InputStream in = clientSocket.getInputStream();
-                     OutputStream out = clientSocket.getOutputStream()) {
-                    BufferedReader br = new BufferedReader(new InputStreamReader(in, StandardCharsets.UTF_8)); // LineByLine
-                    DataOutputStream dos = new DataOutputStream(out);
-
-                    HttpRequest httpRequest = new HttpRequest(br);
-
-                    if (httpRequest.isGetRequest() && httpRequest.matchPath("/calculate")) {
-                        QueryStrings queryStrings = httpRequest.getQueryStrings();
-
-                        int operand1 = Integer.parseInt(queryStrings.getValue("operand1"));
-                        String operator = queryStrings.getValue("operator");
-                        int operand2 = Integer.parseInt(queryStrings.getValue("operand2"));
-
-                        int result = Calculator.calculate(new PositiveNumber(operand1), operator, new PositiveNumber(operand2));
-                        byte[] body = String.valueOf(result).getBytes();
-
-                        HttpResponse response = new HttpResponse(dos);
-                        response.response200Header("application/json", body.length);
-                        response.responseBody(body);
-                    }
-                }
+                // client 마다 별도 스레드 실행
+                new Thread(new ClientRequestHandler(clientSocket)).start();
             }
         }
     }
