@@ -6,6 +6,8 @@ import org.slf4j.LoggerFactory;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * STEP 1 : 사용자 요청을 메인 Thread 가 처리
@@ -17,6 +19,9 @@ import java.net.Socket;
 public class CustomWebApplicationServer {
 
     private final int port;
+
+    // Thread Pool 생성
+    private ExecutorService executorService = Executors.newFixedThreadPool(10);
 
     private static final Logger logger = LoggerFactory.getLogger(CustomWebApplicationServer.class);
 
@@ -35,7 +40,9 @@ public class CustomWebApplicationServer {
                 logger.info("[CustomWebApplicationServer] client connected!");
 
                 // client 마다 별도 스레드 실행
-                new Thread(new ClientRequestHandler(clientSocket)).start();
+                // new Thread(new ClientRequestHandler(clientSocket)).start();
+
+                executorService.execute(new ClientRequestHandler(clientSocket));
             }
         }
     }
