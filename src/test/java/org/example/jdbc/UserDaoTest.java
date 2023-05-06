@@ -1,6 +1,5 @@
 package org.example.jdbc;
 
-
 import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -21,7 +20,6 @@ public class UserDaoTest {
     @Test
     void createTest() throws Exception {
         UserDao userDao = new UserDao();
-
         userDao.create(new User("wizard", "password", "name", "email"));
 
         User user = userDao.findByUserId("wizard");
