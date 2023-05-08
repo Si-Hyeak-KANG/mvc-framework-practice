@@ -26,7 +26,6 @@ dependencies {
     // https://mvnrepository.com/artifact/org.reflections/reflections
     implementation 'org.reflections:reflections:0.10.2'
 
-
 //  JSP
     implementation 'javax.servlet:jstl:1.2'
 
