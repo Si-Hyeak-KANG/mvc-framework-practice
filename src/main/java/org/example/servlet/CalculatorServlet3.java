@@ -1,14 +1,11 @@
-package org.example;
+package org.example.servlet;
 
 import org.example.calculate.Calculator;
 import org.example.calculate.PositiveNumber;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.servlet.GenericServlet;
 import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;

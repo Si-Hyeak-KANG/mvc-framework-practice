@@ -1,4 +1,4 @@
-package org.example;
+package org.example.servlet;
 
 import org.example.calculate.Calculator;
 import org.example.calculate.PositiveNumber;
